@@ -205,6 +205,46 @@ public class OfertaController {
         return Oferta.vacia();
     }
 
+    public void actualizarCupos(Oferta oferta){
+        PreparedStatement ps = null;
+        Connection con = DbConnection.connect();
+        if(oferta.isPaquete()){
+            for (int atraccion: getAtraccionesDePaquete(oferta.getId())) {
+                String query = "UPDATE atraccion SET cupo=cupo-? Where atraccion.atraccion_id=?";
+                try{
+                    ps = con.prepareStatement(query);
+                    ps.setInt(1,1);
+                    ps.setInt(2,atraccion);
+                    ps.execute();
+
+
+                }catch (SQLException e){
+                    e.printStackTrace();
+                }
+            }
+        }
+        else{
+            String query = "UPDATE atraccion SET cupo=cupo-? Where atraccion.atraccion_id=?";
+            try{
+                ps = con.prepareStatement(query);
+                ps.setInt(1,1);
+                ps.setInt(2,oferta.getId());
+                ps.execute();
+
+
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+
+
+
+
+
+
+
+    }
+
 
 
 }

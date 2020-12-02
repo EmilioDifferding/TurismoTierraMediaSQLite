@@ -11,6 +11,12 @@ import java.util.LinkedList;
 
 public class UserController {
 
+
+
+    public UserController() {
+
+    }
+
     public LinkedList<User> load(){
         LinkedList<User> usuarios = new LinkedList<User>();
         Connection con = DbConnection.connect();
@@ -66,6 +72,7 @@ public class UserController {
     public void comprar(Oferta oferta, User usuario){
         usuario.setPresupuesto( usuario.getPresupuesto()-oferta.getPrecio() );
         usuario.setTiempo_disponible( usuario.getTiempo_disponible() - oferta.getTiempo() );
+        usuario.getCompras().add(oferta);
 
         PreparedStatement ps = null;
         Connection con = DbConnection.connect();

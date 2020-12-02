@@ -8,7 +8,7 @@ public class DbConnection {
         Connection con = null;
         try {
             Class.forName("org.sqlite.JDBC");
-            con =DriverManager.getConnection("jdbc:sqlite:Turismo.db");
+            con =DriverManager.getConnection("jdbc:sqlite:TurismoTierraMedia.db");
         }catch (ClassNotFoundException | SQLException exception){
             System.out.println(exception+"");
         }

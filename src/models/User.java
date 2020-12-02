@@ -1,11 +1,15 @@
 package models;
 
+import java.util.LinkedList;
+
 public class User {
     private int id;
     private int fav;
     private int presupuesto;
     private double tiempo_disponible;
     private String nombre;
+    private LinkedList<Oferta> compras;
+
 
     public User(int id, int fav, int presupuesto, double tiempo_disponible, String nombre) {
         this.id = id;
@@ -13,9 +17,13 @@ public class User {
         this.presupuesto = presupuesto;
         this.tiempo_disponible = tiempo_disponible;
         this.nombre = nombre;
+        this.compras = new LinkedList<Oferta>();
     }
     public User(){}
 
+    public LinkedList<Oferta> getCompras() {
+        return compras;
+    }
 
     public int getId() {
         return id;

@@ -3,6 +3,7 @@ package app;
 import Controllers.ItineraryController;
 import Controllers.OfertaController;
 import Controllers.UserController;
+import helper.Helper;
 import models.Oferta;
 import models.User;
 
@@ -22,8 +23,8 @@ public class App {
         Scanner sc = new Scanner(System.in); // creamos un scanner para leer la entrada de consola
 
         for (User usuario : users) {
-            System.out.println("Bienvenido " + usuario.getNombre() + ". Prepara tu itinerario");
-            System.out.println("Presta atencion a las siguientes ofertas: ");
+            System.out.println("\nBienvenido " + usuario.getNombre() + ". Prepara tu itinerario");
+            System.out.println("Presta atencion a las siguientes ofertas:\n ");
 
             while (!oc.generarOferta(usuario).equals(Oferta.vacia())) {
                 oferta = oc.generarOferta(usuario);
@@ -35,6 +36,7 @@ public class App {
                 decision = sc.next();
                 if (decision.equalsIgnoreCase("Y")) {
                     uc.comprar(oferta,usuario);
+                    oc.actualizarCupos(oferta);
                     itc.actualizarItinerario(usuario, oferta);
                     System.out.println("Producto adquirido!");
                 } else {
@@ -43,6 +45,19 @@ public class App {
             }
             System.out.println("No hay mas ofertas disponibles. Este es tu itinerario para el dia de hoy.");
             System.out.println("---------------------------------------------- \n");
+
+
+            /*TODO: Mostrar el itinerario del usuario*/
+            System.out.println(Helper.mostrarItinerario(usuario));
+            int costoTotal=0;
+            double tiempoTotal=0;
+            for (Oferta ofer : usuario.getCompras()) {
+                costoTotal+=ofer.getPrecio();
+                tiempoTotal+=ofer.getTiempo();
+            }
+            System.out.println("Costo total: "+costoTotal+" Monedas  Tiempo de recorrido: "+tiempoTotal+" horas\n");
+            System.out.println("Monedas restantes: " + usuario.getPresupuesto() + " Monedas  Tiempo restante: " + usuario.getTiempo_disponible()+ " horas.\n");
+
 
             System.out.println("---------------------------------------------- \n");
             oc.getRechazados().clear();

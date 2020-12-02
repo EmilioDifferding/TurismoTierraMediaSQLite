@@ -59,16 +59,17 @@ public class ItineraryController {
         }
     }
 
-    private void insertarAtraccion(int atraccionId, int itinerarioId){
+    private void insertarAtraccion(int atraccionId,int ofertaId, int itinerarioId){
         Connection con = DbConnection.connect();
         PreparedStatement ps = null;
         try {
-            String query = ("INSERT INTO detalle_itinerario (itinerario_id, atraccion_id)\r\n"
-                    + "VALUES (?,?)");
+            String query = ("INSERT INTO detalle_itinerario (itinerario_id, atraccion_id,promo_id)\r\n"
+                    + "VALUES (?,?,?)");
 
             ps = con.prepareStatement(query);
             ps.setInt(1, itinerarioId);
             ps.setInt(2, atraccionId);
+            ps.setInt(3,ofertaId);
             ps.execute();
         }catch (SQLException e){
             e.printStackTrace();
@@ -86,12 +87,12 @@ public class ItineraryController {
 
         if (oferta.isPaquete()) {
             for(int atraccion : OfertaController.getAtraccionesDePaquete(oferta.getId())) {
-                insertarAtraccion(atraccion, obtenerItinerario( usuario ) );
+                insertarAtraccion(atraccion,oferta.getId(), obtenerItinerario( usuario ) );
             }
 
 
         } else {
-           insertarAtraccion(oferta.getId(), obtenerItinerario( usuario ));
+           insertarAtraccion(oferta.getId(),0, obtenerItinerario( usuario ));
         }
 
     }

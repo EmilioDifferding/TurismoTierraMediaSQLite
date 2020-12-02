@@ -27,7 +27,10 @@ public class Oferta {
     @Override
     public String toString() {
         // TODO Auto-generated method stub
-        return "Producto: "+this.nombre+ " Descripcion: "+this.descripcion+" Precio: "+this.precio+" Monedas Tiempo de recorrido: "+this.tiempo;
+        if(this.descripcion==null){
+            return "Producto: "+this.nombre+" Precio: "+this.precio+" Monedas  Tiempo de recorrido: "+this.tiempo;
+        }
+        return "Producto: "+this.nombre+ " Descripcion: "+this.descripcion+" Precio: "+this.precio+" Monedas  Tiempo de recorrido: "+this.tiempo;
     }
 
     public static Oferta vacia() {
